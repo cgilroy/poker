@@ -20,4 +20,14 @@ describe Card do
 
     end
 
+    describe '#==' do
+        subject(:card) { Card.new(:spade, :six) }
+        let(:same_card) { Card.new(:spade, :six) }
+        let(:diff_card) { Card.new(:heart, :king) }
+        it 'returns true when cards are identical' do
+            expect(card == same_card).to be(true)
+            expect(card == diff_card).to be(false)
+        end
+    end
+
 end 
