@@ -15,4 +15,9 @@ class Deck
     def shuffle
         @cards.shuffle!
     end
+
+    def take_card(qty)
+        raise "Can't take that many cards!" if qty > @cards.length
+        return @cards.slice!(0,qty)
+    end
 end
