@@ -14,4 +14,15 @@ class Card
         false
     end
 
+    def <=>(card)
+        my_index = VALUES.index(@value)
+        test_index = VALUES.index(card.value)
+
+        return -1 if my_index < test_index
+        return 0 if my_index == test_index
+        return 1 if my_index > test_index
+
+        nil
+    end
+
 end

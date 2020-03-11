@@ -30,4 +30,16 @@ describe Card do
         end
     end
 
+    describe '#<=>' do
+        let(:big_card) { Card.new(:spade, :king) }
+        let(:little_card) { Card.new(:heart, :ace) }
+        let(:same_card) { Card.new(:heart, :king) }
+        it 'returns -1, 0, 1 for card that is valued less than, equal to or greater than self' do
+            expect(big_card <=> little_card).to be(1)
+            expect(little_card <=> big_card).to be(-1)
+            expect(big_card <=> same_card).to be(0)
+        end
+    
+    end
+
 end 
