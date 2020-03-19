@@ -20,4 +20,8 @@ class Deck
         raise "Can't take that many cards!" if qty > @cards.length
         return @cards.slice!(0,qty)
     end
+
+    def return_cards(cards)
+        cards.each { |card| @cards << card }
+    end
 end

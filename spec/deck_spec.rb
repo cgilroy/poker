@@ -43,4 +43,17 @@ describe Deck do
             expect{deck.take_card(53)}.to raise_error("Can't take that many cards!")
         end
     end
+
+    describe '#return_cards' do
+        let(:some_cards) { deck.take_card(2) }
+        it "return cards back to the deck" do
+            deck.return_cards(some_cards)
+            expect(deck.cards.length).to be(52)
+        end
+
+        it 'should add cards to the bottom of the deck' do
+            deck.return_cards(some_cards)
+            expect(deck.cards[50..52]).to eq(some_cards)
+        end
+    end
 end
