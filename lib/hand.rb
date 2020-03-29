@@ -17,4 +17,8 @@ class Hand
     def sort!
         @cards.sort!
     end
+
+    def self.winner(hands)
+        hands.sort.last
+    end
 end
