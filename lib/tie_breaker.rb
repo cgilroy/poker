@@ -1,3 +1,5 @@
+# All credit for this module goes to AppAcademy
+
 module TieBreaker
   def tie_breaker(other_hand)
     case rank

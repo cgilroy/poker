@@ -1,3 +1,5 @@
+# All credit for this module goes to AppAcademy
+
 require_relative './tie_breaker'
 
 module PokerHands
