@@ -1,6 +1,7 @@
 class Card
+    include Comparable
     attr_reader :suit, :value
-    SUITS = [:diamond,:spade,:club,:heart]
+    SUITS = [:club,:diamond,:heart,:spade]
     VALUES = [:two, :three, :four, :five, :six, :seven, :eight, :nine, :ten, :jack, :queen, :king, :ace]
     def initialize(suit,value)
         raise "Invalid suit" unless SUITS.include?(suit)
@@ -17,12 +18,12 @@ class Card
     def <=>(card)
         my_index = VALUES.index(@value)
         test_index = VALUES.index(card.value)
-
-        return -1 if my_index < test_index
-        return 0 if my_index == test_index
-        return 1 if my_index > test_index
-
-        nil
+        return 0 if card == self
+        if my_index != test_index then
+            my_index <=> test_index
+        elsif suit != card.suit then
+            SUITS.index(suit) <=> SUITS.index(card.suit)
+        end
     end
 
     def self.royal_values
