@@ -1,7 +1,7 @@
 class Card
     attr_reader :suit, :value
     SUITS = [:diamond,:spade,:club,:heart]
-    VALUES = [:ace, :two, :three, :four, :five, :six, :seven, :eight, :nine, :ten, :jack, :queen, :king]
+    VALUES = [:two, :three, :four, :five, :six, :seven, :eight, :nine, :ten, :jack, :queen, :king, :ace]
     def initialize(suit,value)
         raise "Invalid suit" unless SUITS.include?(suit)
         raise "Invalid value" unless VALUES.include?(value)
@@ -24,5 +24,13 @@ class Card
 
         nil
     end
+
+    def self.royal_values
+        [:ten,:jack,:queen,:king,:ace]
+    end
+
+    def self.values
+        VALUES
+    end 
 
 end
