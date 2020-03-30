@@ -56,4 +56,12 @@ describe Deck do
             expect(deck.cards[50..52]).to eq(some_cards)
         end
     end
+
+    describe '#deal_hand' do
+        it 'should return a hand' do
+            new_hand = deck.deal_hand
+            expect(new_hand).to be_a(Hand)
+            expect(new_hand.cards.length).to be(5)
+        end
+    end
 end

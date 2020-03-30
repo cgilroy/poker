@@ -24,4 +24,8 @@ class Deck
     def return_cards(cards)
         cards.each { |card| @cards << card }
     end
+
+    def deal_hand
+        Hand.new(take_card(5))
+    end
 end
