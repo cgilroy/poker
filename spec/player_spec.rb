@@ -18,4 +18,19 @@ describe Player do
     end
 
 
+    describe '#make_bet' do
+        it 'should reduce the players chip count by the bet amounts (when on first bets)' do
+            expect{ player.make_bet(2) }.to change { player.chip_count }.by(-2)
+        end
+
+        it 'should only remove cash from the player to reach the total bet amount' do
+            player.make_bet(5)
+            expect{ player.make_bet(8) }.to change { player.chip_count }.by(-3)
+        end
+
+        it 'should raise an error if you bet more than you have' do
+            expect { player.make_bet(25) }.to raise_error 'insufficient funds'
+        end
+    end
+
 end
