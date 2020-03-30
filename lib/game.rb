@@ -26,4 +26,9 @@ class Game
     def add_cash_to_pot(amt)
         @pot += amt
     end
+
+    def game_over?
+        return true if @players.count { |player| player.chip_count > 0 } == 1
+        false
+    end
 end

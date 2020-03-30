@@ -53,4 +53,12 @@ describe Game do
         end
     end
 
+    describe '#game_over?' do
+        it 'should return true when only one player has chips' do
+            game.setup_game(2,0)
+            game.setup_game(1,20)
+            expect(game.game_over?).to be(true)
+        end
+    end
+
 end 
