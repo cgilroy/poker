@@ -47,4 +47,10 @@ describe Game do
         end
     end
 
+    describe '#add_cash_to_pot' do
+        it 'should add money to the pot' do 
+            expect { game.add_cash_to_pot(20) }.to change {game.pot}.by(20)
+        end
+    end
+
 end 

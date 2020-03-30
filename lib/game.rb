@@ -22,4 +22,8 @@ class Game
             end
         end
     end
+
+    def add_cash_to_pot(amt)
+        @pot += amt
+    end
 end
