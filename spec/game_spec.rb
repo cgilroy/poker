@@ -23,6 +23,28 @@ describe Game do
             game.setup_game(4,20)
             expect(game.players.length).to be(4)
         end
+
+        it 'should give the players the chips specified' do
+            game.setup_game(4,20)
+            expect( game.players.all? { |player| player.chip_count == 20 }).to be(true)
+        end
+    end
+
+    describe '#deal_hands' do
+        before(:each) do
+            game.setup_game(3,20)
+        end
+
+        it 'should give each player a hand' do
+            game.deal_hands
+            expect( game.players.all? { |player| !player.hand.nil? } ).to be(true)
+        end
+
+        it 'should only deal hands to players with chips' do
+            game.setup_game(1,0)
+            game.deal_hands
+            expect( game.players.last.hand ).to be(nil)
+        end
     end
 
 end 
