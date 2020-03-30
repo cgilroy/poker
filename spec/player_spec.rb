@@ -33,4 +33,29 @@ describe Player do
         end
     end
 
+    describe '#collect_winnings' do
+        it 'should add the winnings to the palyers chip count' do
+            expect { player.collect_winnings(5) }.to change { player.chip_count }.by(5)
+        end
+    end
+
+    describe '#return_cards' do
+        let(:hand) { double('hand') }
+        let(:cards) { double('cards') }
+
+        before(:each) do
+            player.get_hand(hand)
+            allow(hand).to receive(:cards).and_return(cards)
+        end
+
+        it 'should return the cards to the deck' do
+            expect(player.return_cards).to eq(cards)
+        end
+
+        it 'should set the hand to nil' do
+            player.return_cards
+            expect(player.hand).to be(nil)
+        end
+    end
+
 end

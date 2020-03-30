@@ -17,4 +17,14 @@ class Player
         @curr_bet = total_bet
         @chip_count -= bet_tot
     end
+
+    def collect_winnings(winnings)
+        @chip_count += winnings
+    end
+
+    def return_cards
+        return_cards = @hand.cards
+        @hand = nil
+        return_cards
+    end
 end
