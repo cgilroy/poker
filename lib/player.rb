@@ -27,4 +27,16 @@ class Player
         @hand = nil
         return_cards
     end
+
+    def fold
+        @folded = true
+    end
+
+    def reset_fold
+        @folded = false
+    end
+
+    def folded?
+        @folded
+    end
 end

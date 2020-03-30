@@ -58,4 +58,26 @@ describe Player do
         end
     end
 
+    describe '#fold' do
+        it 'should set the players folded? attribute to true' do
+            player.fold
+            expect(player).to be_folded
+        end
+    end
+
+    describe '#folded?' do
+        it 'should return true if player has folded' do
+            player.fold
+            expect(player.folded?).to be(true)
+        end
+    end
+
+    describe '#reset_fold' do
+        it 'should set folded? to false' do
+            player.fold
+            player.reset_fold
+            expect(player).to_not be_folded
+        end
+    end
+
 end
