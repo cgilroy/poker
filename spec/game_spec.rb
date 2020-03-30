@@ -61,4 +61,13 @@ describe Game do
         end
     end
 
+    describe '#round_over?' do
+        it 'should end when only one player has not folded' do
+            game.setup_game(3,20)
+            game.reset_round
+            game.players[0..1].each(&:fold)
+            expect(game.round_over?).to be(true)
+        end
+    end
+
 end 

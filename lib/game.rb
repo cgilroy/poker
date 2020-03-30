@@ -1,5 +1,6 @@
 require_relative 'player'
 require_relative 'deck'
+require 'byebug'
 
 class Game
     attr_reader :players, :pot, :deck
@@ -7,6 +8,18 @@ class Game
         @players = []
         @pot = 0
         @deck = Deck.new
+    end
+
+    def play_game
+        until game_over?
+            reset_round
+            deal_hands
+        end
+    end
+
+    def reset_round
+        @deck.shuffle
+        @players.each(&:reset_fold)
     end
 
     def setup_game(num_players,buy_in)
@@ -25,6 +38,11 @@ class Game
 
     def add_cash_to_pot(amt)
         @pot += amt
+    end
+
+    def round_over?
+        return true if @players.count { |player| !player.folded? } == 1
+        false
     end
 
     def game_over?
