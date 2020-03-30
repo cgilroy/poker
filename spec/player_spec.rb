@@ -9,5 +9,13 @@ describe Player do
         end
     end
 
-    
+    describe '#get_hand' do
+        let(:hand) { double ('hand') }
+        it 'should give the player a hand' do
+            player.get_hand(hand)
+            expect(player.hand).to eq(hand)
+        end
+    end
+
+
 end
