@@ -39,4 +39,28 @@ class Player
     def folded?
         @folded
     end
+
+    def reset_bet
+        @curr_bet = 0
+    end
+
+    def bet_response
+        puts "Do you call bet or fold? (c/b/f)"
+        resp = gets.chomp.downcase
+        case resp
+        when 'c' then :call
+        when 'b' then :bet
+        when 'f' then :fold
+        else
+            puts 'Invalid character'
+            bet_response
+        end
+    end
+
+    def get_bet
+        puts "Bet amount (you have $#{chip_count}"
+        amount = gets.chomp.to_i
+        raise 'insufficient funds' if bet > chip_count
+        amount
+    end
 end

@@ -36,6 +36,42 @@ class Game
         end
     end
 
+    def get_player_bets
+        players.each { |player| player.reset_bet }
+        highest_bet = 0
+        no_raises_made = false
+        last_bet_player = nil
+
+        until no_raises_made
+            no_raises_made = true
+            players.each_with_index do |player,idx|
+                break if last_bet_player == player || round_over?
+                if !player.folded? then
+                    begin resp = player.bet_response
+                        case resp
+                        when :call
+                            add_cash_to_pot(player.make_bet(highest_bet))
+                        when :bet
+                            raise 'insufficient funds' if highest_bet > player.chip_count
+                            last_bet_player = player
+                            bet = player.get_bet
+                            raise "bet must be $#{highest_bet} or more" unless bet >= highest_bet
+                            amount = player.make_bet(bet)
+                            highest_bet = bet
+                            add_cash_to_pot(amount)
+                            no_raises_made = false
+                        when :fold
+                            player.fold
+                        end
+                    rescue => e
+                        puts "#{e.message}"
+                        retry
+                    end
+                end
+            end
+        end
+    end
+
     def add_cash_to_pot(amt)
         @pot += amt
     end
