@@ -1,4 +1,5 @@
 require_relative 'card'
+require_relative 'hand'
 
 class Deck
     SUITS = [:diamond,:spade,:club,:heart]
