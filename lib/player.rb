@@ -63,7 +63,7 @@ class Player
     end
 
     def bet_response
-        puts "Do you call bet or fold? (c/b/f)"
+        puts "Do you call, bet, or fold? (c/b/f)"
         resp = gets.chomp.downcase
         case resp
         when 'c' then :call
