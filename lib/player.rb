@@ -21,6 +21,7 @@ class Player
         raise 'insufficient funds' unless bet_tot <= chip_count
         @curr_bet = total_bet
         @chip_count -= bet_tot
+        bet_tot
     end
 
     def collect_winnings(winnings)
@@ -38,7 +39,7 @@ class Player
         indices = gets.chomp.split(' ').map(&:to_i)
         raise 'Invalid index' if indices.any? { |val| val > 9 || val < 0 }
         raise 'Only select three cards max' if indices.count > 3
-        indices.map { |idx| hand.cards[i-1] }
+        indices.map { |idx| hand.cards[idx-1] }
     end
 
     def swap_cards(old_cards,new_cards)
@@ -75,9 +76,9 @@ class Player
     end
 
     def get_bet
-        puts "Bet amount (you have $#{chip_count}"
+        puts "Bet amount (you have $#{chip_count})"
         amount = gets.chomp.to_i
-        raise 'insufficient funds' if bet > chip_count
+        raise 'insufficient funds' if amount > chip_count
         amount
     end
 end
