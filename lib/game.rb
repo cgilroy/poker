@@ -23,7 +23,14 @@ class Game
     def end_round
         display_hands
         puts "WINNER"
-        puts ""
+        puts "#{winner.hand} takes the $#{pot} pot"
+        winner.collect_winnings(pot)
+        @pot = 0
+        return_cards
+    end
+
+    def return_cards
+        players.each { |player| @deck.return_cards(player.return_cards) }
     end
 
     def winner
