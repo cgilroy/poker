@@ -120,6 +120,7 @@ class Game
 
         puts "Current Player: #{player_idx + 1} bet $#{players[player_idx].curr_bet}"
         puts "Total bet is at $#{high_bet}"
+        puts "Player's Hand: #{players[player_idx].hand}"
     end
 
     def swap_cards
