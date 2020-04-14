@@ -14,6 +14,10 @@ class Hand
         old_cards.each { |card| @cards.delete(card) }
     end
 
+    def to_s
+        cards.join(" ")
+    end
+
     def sort!
         @cards.sort!
     end

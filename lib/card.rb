@@ -10,6 +10,10 @@ class Card
         @value = value
     end
 
+    def to_s
+        value.to_s + " of " + suit.to_s
+    end
+
     def ==(card)
         return true if card.value == @value && card.suit == @suit
         false
