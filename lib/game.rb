@@ -26,6 +26,10 @@ class Game
         puts ""
     end
 
+    def winner
+        players.max
+    end
+
     def display_hands
         puts "PLAYER HANDS"
         players.each do |player|

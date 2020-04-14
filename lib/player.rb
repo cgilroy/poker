@@ -1,10 +1,15 @@
 
 class Player
     attr_reader :chip_count, :hand, :curr_bet
+    include Comparable
     def initialize(buy_in)
         @chip_count = buy_in
         @hand = nil
         @curr_bet = 0
+    end
+
+    def <=>(compare_player)
+        hand <=> compare_player.hand
     end
 
     def get_hand(hand)
