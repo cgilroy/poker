@@ -76,6 +76,7 @@ class Game
             players.each_with_index do |player,idx|
                 break if last_bet_player == player || round_over?
                 if !player.folded? then
+                    display_round_stats(idx,highest_bet)
                     begin resp = player.bet_response
                         case resp
                         when :call
@@ -99,6 +100,17 @@ class Game
                 end
             end
         end
+    end
+
+    def display_round_stats(player_idx,high_bet)
+        puts "Current Pot: $#{@pot} High bet: $#{high_bet}"
+        players.each_with_index do |player, idx|
+            puts "Player #{idx + 1} has #{player.bankroll}"
+        end
+        puts
+
+        puts "Current Player: #{index + 1} bet $#{players[player_idx].curr_bet}"
+        puts "Total bet is at $#{high_bet}"
     end
 
     def swap_cards
