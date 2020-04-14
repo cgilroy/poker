@@ -3,6 +3,29 @@ class Card
     attr_reader :suit, :value
     SUITS = [:club,:diamond,:heart,:spade]
     VALUES = [:two, :three, :four, :five, :six, :seven, :eight, :nine, :ten, :jack, :queen, :king, :ace]
+    SUIT_SYMBOLS = {
+        :club => "♣",
+        :diamond => "♦",
+        :heart => "♥",
+        :spade => "♠"
+    }
+
+    VALUE_SYMBOLS = {
+        :two   => "2",
+        :three => "3",
+        :four  => "4",
+        :five  => "5",
+        :six   => "6",
+        :seven => "7",
+        :eight => "8",
+        :nine  => "9",
+        :ten   => "10",
+        :jack  => "J",
+        :queen => "Q",
+        :king  => "K",
+        :ace   => "A"
+    }
+
     def initialize(suit,value)
         raise "Invalid suit" unless SUITS.include?(suit)
         raise "Invalid value" unless VALUES.include?(value)
@@ -11,7 +34,7 @@ class Card
     end
 
     def to_s
-        value.to_s + " of " + suit.to_s
+        VALUE_SYMBOLS[value] + SUIT_SYMBOLS[suit]
     end
 
     def ==(card)
