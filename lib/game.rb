@@ -17,6 +17,7 @@ class Game
             get_player_bets
             swap_cards
             get_player_bets
+            end_round
         end
     end
 
@@ -30,11 +31,12 @@ class Game
     end
 
     def return_cards
-        players.each { |player| @deck.return_cards(player.return_cards) }
+        players.each { |player| @deck.return_cards(player.return_cards) if !player.hand.nil? }
     end
 
     def winner
-        players.max
+        check_players = players.select { |player| !player.folded? }
+        check_players.max
     end
 
     def display_hands
@@ -48,7 +50,14 @@ class Game
 
     def reset_round
         @deck.shuffle
-        @players.each(&:reset_fold)
+        @players.each do |player|
+            if player.chip_count > 0
+                player.reset_fold
+            else
+                player.fold
+            end
+        end
+        # @players.each(&:reset_fold)
     end
 
     def setup_game(num_players,buy_in)
@@ -74,29 +83,29 @@ class Game
         until no_raises_made
             no_raises_made = true
             players.each_with_index do |player,idx|
+                next if player.folded?
                 break if last_bet_player == player || round_over?
-                if !player.folded? then
-                    display_round_stats(idx,highest_bet)
-                    begin resp = player.bet_response
-                        case resp
-                        when :call
-                            add_cash_to_pot(player.make_bet(highest_bet))
-                        when :bet
-                            raise 'insufficient funds' if highest_bet > player.chip_count
-                            last_bet_player = player
-                            bet = player.get_bet
-                            raise "bet must be $#{highest_bet} or more" unless bet >= highest_bet
-                            amount = player.make_bet(bet)
-                            highest_bet = bet
-                            add_cash_to_pot(amount)
-                            no_raises_made = false
-                        when :fold
-                            player.fold
-                        end
-                    rescue => e
-                        puts "#{e.message}"
-                        retry
+                display_round_stats(idx,highest_bet)
+                begin 
+                    resp = player.bet_response
+                    case resp
+                    when :call
+                        add_cash_to_pot(player.make_bet(highest_bet))
+                    when :bet
+                        raise 'insufficient funds' if highest_bet > player.chip_count
+                        last_bet_player = player
+                        bet = player.get_bet
+                        raise "bet must be $#{highest_bet} or more" unless bet >= highest_bet
+                        amount = player.make_bet(bet)
+                        highest_bet = bet
+                        add_cash_to_pot(amount)
+                        no_raises_made = false
+                    when :fold
+                        player.fold
                     end
+                rescue => e
+                    puts "#{e.message}"
+                    retry
                 end
             end
         end
@@ -105,11 +114,11 @@ class Game
     def display_round_stats(player_idx,high_bet)
         puts "Current Pot: $#{@pot} High bet: $#{high_bet}"
         players.each_with_index do |player, idx|
-            puts "Player #{idx + 1} has #{player.bankroll}"
+            puts "Player #{idx + 1} has #{player.chip_count}"
         end
         puts
 
-        puts "Current Player: #{index + 1} bet $#{players[player_idx].curr_bet}"
+        puts "Current Player: #{player_idx + 1} bet $#{players[player_idx].curr_bet}"
         puts "Total bet is at $#{high_bet}"
     end
 
@@ -126,7 +135,7 @@ class Game
     end
 
     def add_cash_to_pot(amt)
-        @pot += amt
+        (@pot += amt) && amt
     end
 
     def round_over?
@@ -138,4 +147,10 @@ class Game
         return true if @players.count { |player| player.chip_count > 0 } == 1
         false
     end
+end
+
+def test
+    x = Game.new
+    x.setup_game(4,30)
+    x.play_game
 end
