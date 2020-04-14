@@ -28,6 +28,18 @@ class Player
         return_cards
     end
 
+    def get_swapped_cards
+        puts "Please enter the indices of the cards (separated by a space)"
+        indices = gets.chomp.split(' ').map(&:to_i)
+        raise 'Invalid index' if indices.any? { |val| val > 9 || val < 0 }
+        raise 'Only select three cards max' if indices.count > 3
+        indices.map { |idx| hand.cards[i-1] }
+    end
+
+    def swap_cards(old_cards,new_cards)
+        hand.swap_cards(old_cards,new_cards)
+    end
+
     def fold
         @folded = true
     end

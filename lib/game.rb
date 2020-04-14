@@ -14,6 +14,24 @@ class Game
         until game_over?
             reset_round
             deal_hands
+            get_player_bets
+            swap_cards
+            get_player_bets
+        end
+    end
+
+    def end_round
+        display_hands
+        puts "WINNER"
+        puts ""
+    end
+
+    def display_hands
+        puts "PLAYER HANDS"
+        players.each do |player|
+            if !player.folded? then
+                puts "#{player.hand.rank}: #{player.hand}"
+            end
         end
     end
 
@@ -68,6 +86,18 @@ class Game
                         retry
                     end
                 end
+            end
+        end
+    end
+
+    def swap_cards
+        players.each_with_index do |player,idx|
+            if !player.folded? then
+                puts "Player #{idx+1}: Enter your cards to trade"
+                puts player.hand
+                trade_cards = player.get_swapped_cards
+                deck.return_cards(trade_cards)
+                player.swap_cards(trade_cards,deck.take_card(trade_cards.count))
             end
         end
     end
